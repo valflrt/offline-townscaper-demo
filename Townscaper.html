@@ -4,14 +4,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <title>Townscaper</title>
-    <link rel="stylesheet" href="./Build/style.css" />
+    <link rel="stylesheet" href="./build/style.css" />
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
       <canvas
         id="unity-canvas"
         style="
-          background: url('Build/WebGL.jpg') center center / cover;
+          background: url('build/WebGL.jpg') center center / cover;
           cursor: default;
         "
         width="1251"
@@ -164,7 +164,7 @@
     </script>
 
     <script>
-      var buildUrl = "Build";
+      var buildUrl = "build";
       var loaderUrl = buildUrl + "/WebGL.loader.js";
       var config = {
         dataUrl: buildUrl + "/WebGL.data",
@@ -221,8 +221,8 @@
       };
       document.body.appendChild(script);
     </script>
-    <script src="./Build/WebGL.loader.js"></script>
+    <script src="./build/WebGL.loader.js"></script>
 
-    <script src="./Build/WebGL.framework.js"></script>
+    <script src="./build/WebGL.framework.js"></script>
   </body>
 </html>
