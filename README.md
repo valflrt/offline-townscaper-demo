@@ -8,7 +8,7 @@ All I did was collect the files required by the webpage. I also added a very sim
 
 ## How to use
 
-Python and http.server are required for this to work because it requires creatins a http server with:
+Python is required for this to work because it requires creating a http server with:
 
 ```
 python3 -m http.server 8034
