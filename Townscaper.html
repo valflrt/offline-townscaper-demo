@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <title>Townscaper</title>
-    <link rel="stylesheet" href="./Townscaper_files/style.css" />
+    <link rel="stylesheet" href="./Build/style.css" />
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
@@ -29,8 +29,6 @@
 
     <div id="save_menu">
       <div>
-        Save your creation:
-
         <div>
           <div id="save_menu_btn_save">save</div>
           <div id="save_menu_btn_load">load</div>
@@ -40,20 +38,33 @@
 
     <style>
       #save_menu {
-        display: block;
         position: fixed;
-        bottom: 0;
+        top: 0;
         left: 0;
 
-        padding: 8px;
+        width: 100%;
 
-        background-color: #474952;
-        border: 1.5px solid #101010;
-        border-top-right-radius: 8px;
+        pointer-events: none;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       #save_menu > div {
-        padding: 8px;
+        display: inline-block;
+
+        padding: 6px;
+
+        background-color: #474952;
+        border: 1.5px solid #101010;
+        border-top: none;
+        border-bottom-right-radius: 8px;
+        border-bottom-left-radius: 8px;
+      }
+
+      #save_menu > div > div {
+        padding: 6px;
         padding-bottom: 2px;
 
         font-size: 14px;
@@ -63,16 +74,10 @@
         border-radius: 4px;
 
         display: flex;
-        flex-flow: column nowrap;
-        gap: 8px;
-      }
-
-      #save_menu > div > div {
-        display: flex;
         flex-flow: row nowrap;
-        align-items: stretch;
-        justify-content: center;
         gap: 8px;
+
+        pointer-events: initial;
       }
 
       #save_menu > div > div > div {
@@ -107,7 +112,6 @@
       }
     </style>
     <script>
-      const saveMenu = document.getElementById("save_menu");
       const saveMenuBtnSave = document.getElementById("save_menu_btn_save");
       const saveMenuBtnLoad = document.getElementById("save_menu_btn_load");
 
@@ -217,8 +221,8 @@
       };
       document.body.appendChild(script);
     </script>
-    <script src="./Townscaper_files/WebGL.loader.js"></script>
+    <script src="./Build/WebGL.loader.js"></script>
 
-    <script src="./Townscaper_files/WebGL.framework.js"></script>
+    <script src="./Build/WebGL.framework.js"></script>
   </body>
 </html>
