@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <title>Townscaper</title>
+    <link rel="stylesheet" href="./Townscaper_files/style.css" />
+  </head>
+  <body>
+    <div id="unity-container" class="unity-desktop">
+      <canvas
+        id="unity-canvas"
+        style="
+          background: url('Build/WebGL.jpg') center center / cover;
+          cursor: default;
+        "
+        width="1251"
+        height="896"
+      ></canvas>
+      <div id="unity-loading-bar" style="display: none">
+        <div id="unity-progress-bar-empty">
+          <div id="unity-progress-bar-full" style="width: 100%"></div>
+        </div>
+      </div>
+      <div id="unity-mobile-warning">
+        WebGL builds are not supported on mobile devices.
+      </div>
+    </div>
+
+    <div id="save_menu">
+      <div>
+        Save your creation:
+
+        <div>
+          <div id="save_menu_btn_save">save</div>
+          <div id="save_menu_btn_load">load</div>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      #save_menu {
+        display: block;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+
+        padding: 8px;
+
+        background-color: #474952;
+        border: 1.5px solid #101010;
+        border-top-right-radius: 8px;
+      }
+
+      #save_menu > div {
+        padding: 8px;
+        padding-bottom: 2px;
+
+        font-size: 14px;
+        font-family: monospace;
+
+        background-color: #7a7b82;
+        border-radius: 4px;
+
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 8px;
+      }
+
+      #save_menu > div > div {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: stretch;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      #save_menu > div > div > div {
+        padding: 8px;
+
+        color: #19191a;
+        font-size: 16px;
+
+        background-color: #f3d666;
+        border: 1.5px solid #101010;
+        border-radius: 4px;
+
+        cursor: default;
+
+        transition-duration: 100ms;
+      }
+
+      #save_menu > div > div > div#save_menu_btn_save {
+        transform: rotateZ(-2deg);
+      }
+      #save_menu > div > div > div#save_menu_btn_save:hover {
+        transform: rotateZ(-2deg) scale(1.05);
+        background-color: #f3e4a6;
+      }
+
+      #save_menu > div > div > div#save_menu_btn_load {
+        transform: rotateZ(1.5deg);
+      }
+      #save_menu > div > div > div#save_menu_btn_load:hover {
+        transform: rotateZ(1.5deg) scale(1.05);
+        background-color: #f3e4a6;
+      }
+    </style>
+    <script>
+      const saveMenu = document.getElementById("save_menu");
+      const saveMenuBtnSave = document.getElementById("save_menu_btn_save");
+      const saveMenuBtnLoad = document.getElementById("save_menu_btn_load");
+
+      saveMenuBtnSave.addEventListener("click", () => {
+        let hash = window.location.hash.substr(1);
+
+        var element = document.createElement("a");
+        element.setAttribute(
+          "href",
+          "data:text/plain;charset=utf-8," + encodeURIComponent(hash)
+        );
+        element.setAttribute("download", hash);
+
+        element.style.display = "none";
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
+      });
+
+      saveMenuBtnLoad.addEventListener("click", () => {
+        // Create a hidden input element for file selection
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = ".txt"; // Optional: limit to text files
+
+        // Listen for the file selection
+        input.addEventListener("change", (event) => {
+          const file = event.target.files[0];
+          if (file) {
+            // Use FileReader to read the file content
+            const reader = new FileReader();
+
+            // Define what happens when the file is read
+            reader.onload = function (e) {
+              // Display the file content in the <pre> tag
+              window.location.hash = e.target.result;
+              window.location.reload();
+            };
+
+            // Read the file as text
+            reader.readAsText(file);
+          }
+        });
+
+        // Trigger the file dialog
+        input.click();
+      });
+    </script>
+
+    <script>
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/WebGL.loader.js";
+      var config = {
+        dataUrl: buildUrl + "/WebGL.data",
+        frameworkUrl: buildUrl + "/WebGL.framework.js",
+        codeUrl: buildUrl + "/WebGL.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "Raw Fury",
+        productName: "Townscaper",
+        productVersion: "0.23",
+      };
+
+      var container = document.querySelector("#unity-container");
+      var canvas = document.querySelector("#unity-canvas");
+      var loadingBar = document.querySelector("#unity-loading-bar");
+      var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var mobileWarning = document.querySelector("#unity-mobile-warning");
+
+      // By default Unity keeps WebGL canvas render target size matched with
+      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
+      // Set this to false if you want to decouple this synchronization from
+      // happening inside the engine, and you would instead like to size up
+      // the canvas DOM size and WebGL render target sizes yourself.
+      // config.matchWebGLToCanvasSize = false;
+
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        container.className = "unity-mobile";
+        // Avoid draining fillrate performance on mobile devices,
+        // and default/override low DPI mode on mobile browsers. Hello3
+        config.devicePixelRatio = 1;
+        mobileWarning.style.display = "block";
+        setTimeout(() => {
+          mobileWarning.style.display = "none";
+        }, 5000);
+      } else {
+        //canvas.style.width = "100%";
+        //canvas.style.height = "100%";
+      }
+      canvas.style.background =
+        "url('" + buildUrl + "/WebGL.jpg') center / cover";
+      loadingBar.style.display = "block";
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+        })
+          .then((unityInstance) => {
+            loadingBar.style.display = "none";
+          })
+          .catch((message) => {
+            alert(message);
+          });
+      };
+      document.body.appendChild(script);
+    </script>
+    <script src="./Townscaper_files/WebGL.loader.js"></script>
+
+    <script src="./Townscaper_files/WebGL.framework.js"></script>
+  </body>
+</html>

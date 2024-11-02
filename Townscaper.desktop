@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.1
+Type=Application
+Name=Townscaper
+Comment=Build quaint island towns with curvy streets. Build small hamlets, soaring cathedrals, canal networks, or sky cities on stilts. Block by block.
+Icon=/home/val/executables/townscaper/favicon.png
+Exec=/home/val/executables/townscaper/start.sh
+Path=/home/val/executables/townscaper
+Actions=
+Categories=Game;
