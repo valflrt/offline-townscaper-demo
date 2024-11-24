@@ -1,6 +1,6 @@
 # Offline Townscaper demo
 
-**Townscaper is a game by Oskar Stålberg. The demo is available [here](https://oskarstalberg.com/Townscaper/).**
+**Townscaper is a game by Oskar Stålberg, all credit goes to him. The demo is available [here](https://oskarstalberg.com/Townscaper/).**
 
 All I did was collect the files required by the webpage. I also added a very simple load/save system to save your creations !
 
